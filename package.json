@@ -34,14 +34,14 @@
   "devDependencies": {
     "@edx/brand": "npm:@openedx/brand-openedx@^1.2.2",
     "@edx/browserslist-config": "1.2.0",
-    "@edx/frontend-build": "github:openedx/frontend-build#ags/2321",
     "@testing-library/react-hooks": "8.0.1",
     "@testing-library/user-event": "14.4.3",
     "axios-mock-adapter": "1.21.3",
-    "@edx/paragon": "21.5.6",
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
     "enzyme": "3.11.0",
-    "@testing-library/jest-dom": "6.1.5",
+    "@openedx/frontend-build": "github:openedx/frontend-build#ags/2321",
+    "@openedx/paragon": "21.13.1",
+    "@testing-library/jest-dom": "6.2.0",
     "@testing-library/react": "12.1.5",
     "core-js": "3.34.0",
     "husky": "8.0.3",
@@ -78,8 +78,8 @@
     "universal-cookie": "4.0.4"
   },
   "peerDependencies": {
-    "@edx/frontend-build": ">= 8.1.0 || ^12.9.0-alpha.1",
-    "@edx/paragon": ">= 10.0.0 < 22.0.0",
+    "@openedx/frontend-build": ">= 13.0.15",
+    "@openedx/paragon": "^21.5.7",
     "prop-types": "^15.7.2",
     "react": "^16.9.0 || ^17.0.0",
     "react-dom": "^16.9.0 || ^17.0.0",
