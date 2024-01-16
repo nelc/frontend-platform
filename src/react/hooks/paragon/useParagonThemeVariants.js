@@ -77,6 +77,8 @@ const useParagonThemeVariants = ({
         setIsBrandThemeVariantLoaded(true);
         return;
       }
+      const getParagonThemeCoreLink = () => document.head.querySelector('link[data-paragon-theme-core="true"]');
+      const getBrandThemeCoreLink = () => document.head.querySelector('link[data-brand-theme-core="true"]');
       const getParagonThemeVariantLink = () => document.head.querySelector(`link[data-paragon-theme-variant='${themeVariant}']`);
       const existingThemeVariantLink = document.head.querySelector(`link[href='${value.urls.default}']`);
       const existingThemeVariantBrandLink = document.head.querySelector(`link[href='${value.urls.brandOverride}']`);
@@ -162,10 +164,25 @@ const useParagonThemeVariants = ({
 
       if (!existingThemeVariantLink) {
         const paragonThemeVariantLink = createThemeVariantLink(value.urls.default);
-        document.head.insertAdjacentElement(
-          'afterbegin',
-          paragonThemeVariantLink,
-        );
+        const foundParagonThemeCoreLink = getParagonThemeCoreLink();
+        const foundBrandThemeCoreLink = getBrandThemeCoreLink();
+
+        if (foundBrandThemeCoreLink) {
+          foundBrandThemeCoreLink.insertAdjacentElement(
+            'afterend',
+            paragonThemeVariantLink,
+          );
+        } else if (foundParagonThemeCoreLink) {
+          foundParagonThemeCoreLink.insertAdjacentElement(
+            'afterend',
+            paragonThemeVariantLink,
+          );
+        } else {
+          document.head.insertAdjacentElement(
+            'beforeend',
+            paragonThemeVariantLink,
+          );
+        }
 
         if (value.urls.brandOverride) {
           const brandThemeVariantLink = createThemeVariantLink(value.urls.brandOverride, { isBrandOverride: true });
@@ -177,7 +194,7 @@ const useParagonThemeVariants = ({
             );
           } else {
             document.head.insertAdjacentElement(
-              'afterbegin',
+              'beforeend',
               brandThemeVariantLink,
             );
           }
