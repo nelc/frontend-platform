@@ -106,7 +106,7 @@ const useParagonThemeCore = ({
 
       const paragonCoreThemeLink = createCoreThemeLink(themeCore.urls.default);
       document.head.insertAdjacentElement(
-        'afterbegin',
+        'beforeend',
         paragonCoreThemeLink,
       );
 
