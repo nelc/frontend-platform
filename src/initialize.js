@@ -204,9 +204,10 @@ export function loadExternalScripts(externalScripts, data) {
  */
 export function setCustomPrimaryColors() {
   const { CUSTOM_PRIMARY_COLORS } = getConfig();
+  const { PARAGON_THEME_URLS } = getConfig();
   const primary = CUSTOM_PRIMARY_COLORS['pgn-color-primary-base'];
 
-  if (!primary) {
+  if (!primary || PARAGON_THEME_URLS != null) {
     return;
   }
   document.documentElement.style.setProperty('--pgn-color-primary-base', primary);
