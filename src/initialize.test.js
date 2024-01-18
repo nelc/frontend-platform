@@ -1,4 +1,5 @@
 import PubSub from 'pubsub-js';
+import { createBrowserHistory } from 'history';
 import {
   APP_PUBSUB_INITIALIZED,
   APP_CONFIG_INITIALIZED,
@@ -37,6 +38,7 @@ jest.mock('./auth');
 jest.mock('./analytics');
 jest.mock('./i18n');
 jest.mock('./auth/LocalForageCache');
+jest.mock('history');
 
 let config = null;
 const newConfig = {
@@ -434,5 +436,14 @@ describe('initialize', () => {
     // eslint-disable-next-line no-console
     expect(console.error).toHaveBeenNthCalledWith(9, 'Error setting custom colors', 'Parameter color does not have format #RRGGBB');
     expect(logError).not.toHaveBeenCalled();
+  });
+});
+
+describe('history', () => {
+  it('browser history called by default path', async () => {
+    // import history from initialize;
+    expect(createBrowserHistory).toHaveBeenCalledWith({
+      basename: '/',
+    });
   });
 });
