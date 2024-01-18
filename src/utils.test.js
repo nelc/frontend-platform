@@ -117,7 +117,6 @@ describe('getQueryParameters', () => {
   });
 });
 
-
 describe('mix', () => {
   it('should return rigth value', () => {
     const expected = '#546e88'; // This value was calculated in https://sass.js.org/ by using sass mix function
@@ -133,7 +132,7 @@ describe('mix', () => {
     const expected = '#8598aa'; // This value was calculated in https://sass.js.org/ by using sass mix function
 
     expect(mix('FFFFFF', '0A3055')).toBe(expected);
-      });
+  });
 });
 
 describe('ParseURL', () => {
