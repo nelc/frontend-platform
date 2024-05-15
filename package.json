@@ -1,6 +1,6 @@
 {
   "name": "@edx/frontend-platform",
-  "version": "1.0.0-semantically-released",
+  "version": "7.1.2-alpha.1",
   "description": "Foundational application framework for Open edX micro-frontend applications.",
   "main": "index.js",
   "publishConfig": {
@@ -79,7 +79,7 @@
     "universal-cookie": "4.0.4"
   },
   "peerDependencies": {
-    "@openedx/frontend-build": ">= 13.0.15",
+    "@openedx/frontend-build": ">= 13.0.15 || >= 13.1.4-alpha.1",
     "@openedx/paragon": ">= 21.5.7 < 23.0.0 || ^22.0.0-alpha.20",
     "prop-types": "^15.7.2",
     "react": "^16.9.0 || ^17.0.0",
