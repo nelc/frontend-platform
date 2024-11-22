@@ -7,6 +7,7 @@ export {
   ensureDefinedConfig,
   parseURL,
   getPath,
+  mix,
 } from './utils';
 export {
   APP_TOPIC,
