@@ -206,6 +206,7 @@ let config = {
   APP_ID: process.env.APP_ID,
   SUPPORT_URL: process.env.SUPPORT_URL,
   PARAGON_THEME_URLS: parseParagonThemeUrls(process.env.PARAGON_THEME_URLS),
+  CUSTOM_PRIMARY_COLORS: process.env.CUSTOM_PRIMARY_COLORS || {},
 };
 
 /**
@@ -360,4 +361,5 @@ export function ensureConfig(keys, requester = 'unspecified application code') {
  * @property {string} APP_ID
  * @property {string} SUPPORT_URL
  * @property {string} PARAGON_THEME_URLS
+ * @property {Object} CUSTOM_PRIMARY_COLORS
  */
