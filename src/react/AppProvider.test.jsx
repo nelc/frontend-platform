@@ -1,11 +1,8 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { mount } from 'enzyme';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom/extend-expect';
 
-import { BrowserRouter as Router } from 'react-router-dom';
 import AppProvider from './AppProvider';
 import { initialize } from '../initialize';
 import { useAppEvent, useTrackColorSchemeChoice, useParagonTheme } from './hooks';
@@ -28,6 +25,7 @@ jest.mock('../config', () => ({
   ...jest.requireActual('../config'),
   getConfig: jest.fn().mockReturnValue({
     BASE_URL: 'localhost:8080',
+    PUBLIC_PATH: '/',
     LMS_BASE_URL: 'localhost:18000',
     LOGIN_URL: 'localhost:18000/login',
     LOGOUT_URL: 'localhost:18000/logout',
