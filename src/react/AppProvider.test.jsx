@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import { mount } from 'enzyme';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/extend-expect';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppProvider from './AppProvider';
@@ -88,57 +88,58 @@ describe('AppProvider', () => {
   it('should render its children with a router', () => {
     const component = (
       <AppProvider store={createStore(state => state)}>
-        <div>Child One</div>
-        <div>Child Two</div>
+        <div className="child">Child One</div>
+        <div className="child">Child Two</div>
       </AppProvider>
     );
 
-    const wrapper = mount(component);
-    const list = wrapper.find('div');
-    expect(wrapper.find(Router).length).toEqual(1);
-    expect(list.length).toEqual(2);
-    expect(list.at(0).text()).toEqual('Child One');
-    expect(list.at(1).text()).toEqual('Child Two');
+    const wrapper = render(component);
+    const list = wrapper.container.querySelectorAll('div.child');
 
-    const reduxProvider = wrapper.find('Provider');
-    expect(reduxProvider.length).toEqual(1);
+    expect(wrapper.getByTestId('browser-router')).toBeInTheDocument();
+    expect(list.length).toEqual(2);
+    expect(list[0].textContent).toEqual('Child One');
+    expect(list[1].textContent).toEqual('Child Two');
+
+    const reduxProvider = wrapper.getByTestId('redux-provider');
+    expect(reduxProvider).toBeInTheDocument();
   });
 
   it('should render its children without a router', () => {
     const component = (
       <AppProvider store={createStore(state => state)} wrapWithRouter={false}>
-        <div>Child One</div>
-        <div>Child Two</div>
+        <div className="child">Child One</div>
+        <div className="child">Child Two</div>
       </AppProvider>
     );
 
-    const wrapper = mount(component);
-    const list = wrapper.find('div');
-    expect(wrapper.find(Router).length).toEqual(0);
+    const wrapper = render(component);
+    const list = wrapper.container.querySelectorAll('div.child');
+    expect(wrapper.queryByTestId('browser-router')).not.toBeInTheDocument();
     expect(list.length).toEqual(2);
-    expect(list.at(0).text()).toEqual('Child One');
-    expect(list.at(1).text()).toEqual('Child Two');
+    expect(list[0].textContent).toEqual('Child One');
+    expect(list[1].textContent).toEqual('Child Two');
 
-    const reduxProvider = wrapper.find('Provider');
-    expect(reduxProvider.length).toEqual(1);
+    const reduxProvider = wrapper.getByTestId('redux-provider');
+    expect(reduxProvider).toBeInTheDocument();
   });
 
   it('should skip redux Provider if not given a store', () => {
     const component = (
       <AppProvider>
-        <div>Child One</div>
-        <div>Child Two</div>
+        <div className="child">Child One</div>
+        <div className="child">Child Two</div>
       </AppProvider>
     );
 
-    const wrapper = mount(component);
-    const list = wrapper.find('div');
+    const wrapper = render(component);
+    const list = wrapper.container.querySelectorAll('div.child');
     expect(list.length).toEqual(2);
-    expect(list.at(0).text()).toEqual('Child One');
-    expect(list.at(1).text()).toEqual('Child Two');
+    expect(list[0].textContent).toEqual('Child One');
+    expect(list[1].textContent).toEqual('Child Two');
 
-    const reduxProvider = wrapper.find('Provider');
-    expect(reduxProvider.length).toEqual(0);
+    const reduxProvider = wrapper.queryByTestId('redux-provider');
+    expect(reduxProvider).not.toBeInTheDocument();
   });
 
   describe('paragon theme and brand', () => {
