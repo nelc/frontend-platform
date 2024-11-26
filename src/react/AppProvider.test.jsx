@@ -32,6 +32,7 @@ jest.mock('../config', () => ({
     REFRESH_ACCESS_TOKEN_ENDPOINT: 'localhost:18000/oauth2/access_token',
     ACCESS_TOKEN_COOKIE_NAME: 'access_token',
     CSRF_TOKEN_API_PATH: 'localhost:18000/csrf',
+    CUSTOM_PRIMARY_COLORS: {},
   }),
 }));
 
