@@ -6,3 +6,7 @@ module.exports = createConfig('jest', {
   ],
   testTimeout: 20000,
 });
+
+module.exports.transformIgnorePatterns = [
+  '/node_modules/(?!(@edx|@openedx))',
+];
