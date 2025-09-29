@@ -54,7 +54,7 @@ Note that the env.config.js file in frontend-platform's root directory is NOT us
 initialization code, it's just there for the test suite and example application.
 */
 import envConfig from 'env.config'; // eslint-disable-line import/no-unresolved
-import { getPath } from './utils';
+import { getPath, mix } from './utils';
 import {
   publish,
 } from './pubSub';
@@ -87,6 +87,7 @@ import {
   APP_LOGGING_INITIALIZED,
   APP_ANALYTICS_INITIALIZED,
   APP_READY, APP_INIT_ERROR,
+  PRIMARY_COLOR_DEFINITIONS,
 } from './constants';
 import configureCache from './auth/LocalForageCache';
 
@@ -205,6 +206,42 @@ export function loadExternalScripts(externalScripts, data) {
   });
 }
 
+/*
+ * Set custom colors based on the config content.
+ * This method allows to change primary colors and its levels on runtime,
+ * if a specific level is already in the configuration that level will have
+ * priority otherwise the level will be calculated based on primary color by
+ * using the mix function.
+ */
+export function setCustomPrimaryColors() {
+  const { CUSTOM_PRIMARY_COLORS } = getConfig();
+  const { PARAGON_THEME_URLS } = getConfig();
+  const primary = CUSTOM_PRIMARY_COLORS['pgn-color-primary-base'];
+
+  if (!primary || Object.keys(PARAGON_THEME_URLS).length > 0) {
+    return;
+  }
+  document.documentElement.style.setProperty('--pgn-color-primary-base', primary);
+
+  Object.keys(PRIMARY_COLOR_DEFINITIONS).forEach((key) => {
+    let color;
+
+    if (key in CUSTOM_PRIMARY_COLORS) {
+      color = CUSTOM_PRIMARY_COLORS[key];
+    } else {
+      try {
+        const [base, weight] = Object.entries(PRIMARY_COLOR_DEFINITIONS[key])[0];
+
+        color = mix(base, primary, weight);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error setting custom colors', error.message);
+      }
+    }
+    document.documentElement.style.setProperty('--'.concat(key), color);
+  });
+}
+
 /**
  * The default handler for the initialization lifecycle's `analytics` phase.
  *
@@ -306,6 +343,7 @@ export async function initialize({
     await handlers.config();
     await jsFileConfig();
     await runtimeConfig();
+    setCustomPrimaryColors();
     publish(APP_CONFIG_INITIALIZED);
 
     loadExternalScripts(externalScripts, {
