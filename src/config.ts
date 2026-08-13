@@ -229,6 +229,7 @@ export interface ConfigDocument {
   SUPPORT_URL: string;
   PARAGON_THEME_URLS: Record<string, any> | Error | undefined;
   externalLinkUrlOverrides?: null | Record<string, string>;
+  CUSTOM_PRIMARY_COLORS: Record<string, any>;
   [otherKey: string]: any;
 }
 
@@ -267,6 +268,7 @@ let config: ConfigDocument = {
   APP_ID: process.env.APP_ID!,
   SUPPORT_URL: process.env.SUPPORT_URL!,
   PARAGON_THEME_URLS: parseParagonThemeUrls(process.env.PARAGON_THEME_URLS!),
+  CUSTOM_PRIMARY_COLORS: process.env.CUSTOM_PRIMARY_COLORS ? JSON.parse(process.env.CUSTOM_PRIMARY_COLORS) : {},
 };
 
 /**

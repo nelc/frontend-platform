@@ -33,6 +33,7 @@ jest.mock('../config', () => ({
     ACCESS_TOKEN_COOKIE_NAME: 'access_token',
     CSRF_TOKEN_API_PATH: 'localhost:18000/csrf',
     PUBLIC_PATH: '/',
+    CUSTOM_PRIMARY_COLORS: {},
   }),
 }));
 
